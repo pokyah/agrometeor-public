@@ -32,7 +32,9 @@ To get the github_url of the script, right click on the download link and select
 
 ---------------------
 
-The agrometeor-public repository website is powered by github pages. Want to know how to quickly and easily publish your R work ? Check the [tutorial](https://pokyah.github.io/howto/Quickly-publish-your-R-interactive-data-visualization-tools-with-github-pages/) available on my blog.
+*The agrometeor-public repository website is powered by github pages.*  
+*Want to know how to quickly and easily publish your R work ? Check the [tutorial](https://pokyah.github.io/howto/Quickly-publish-your-R-interactive-data-visualization-tools-with-github-pages/) available on my blog.*  
+
 Maintained by Thomas Goossens (t.goossens@cra.wallonie.be)  
 *Copyright : Thomas Goossens 2018*
 
