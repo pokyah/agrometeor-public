@@ -22,10 +22,9 @@ To get the raw_url of a script, right click on the download link and select "cop
 
 ## R Script to get data from the Agromet API V1
 
-* `get_from_agromet_API.fun.R` :  
-__[download](./get_from_agromet_API.fun/get_from_agromet_API.fun.R)__ and [read the doc](./get_from_agromet_API.fun/get_from_agromet_API.fun.html). ([raw](https://raw.githubusercontent.com/pokyah/agrometeor-public/master/get_from_agromet_API.fun/get_from_agromet_API.fun.R)
+* `get_from_agromet_API.fun.R` - [doc](./get_from_agromet_API.fun/get_from_agromet_API.fun.html):  
+__[download](./get_from_agromet_API.fun/get_from_agromet_API.fun.R)__ or get the raw_url by right-clicking [here](https://raw.githubusercontent.com/pokyah/agrometeor-public/master/get_from_agromet_API.fun/get_from_agromet_API.fun.R)
 
-https://raw.githubusercontent.com/pokyah/agrometeor-public/master/get_from_agromet_API.fun/get_from_agromet_API.fun.R
 
 Maintained by Thomas Goossens (t.goossens@cra.wallonie.be).
 
