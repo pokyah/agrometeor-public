@@ -9,7 +9,7 @@ Want to contribute ? Feel free to create a pull request.
 2 ways : 
 
 1. Download using this page and add to your R project folder (if you want to stay up-to-date, you will have to manually download the latest version of the scripts)
-2. From within R, source the required script from this github repository using. To do so, you will need this little snippet : 
+2. From within R, source the up-to-date version from this github repository. To do so, you will need this little snippet : 
 
 ```R
 source_github <- function(github_url.chr) {
