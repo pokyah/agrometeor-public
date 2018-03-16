@@ -98,13 +98,6 @@ get_fom_agromet_API.fun <- function(user_token.chr, table_name.chr, sensors.chr,
 
 
 #+ ---------------------------------
-#' ## Utilization
-#' To use it, you can copy and paste the code here above somewhere in your R project folder.  
-#' An other, nicer solution, is to load it from gitlab so that you are sure to always work with the latest version (for this, you will of course need an effective internet connection).   
-#+ utilization,echo=TRUE,warning=FALSE,message=FALSE,error=FALSE, results='asis'
-
-
-#+ ---------------------------------
 #' ## Terms of service 
 #' To use the [AGROMET API](https://app.pameseb.be/fr/pages/api_call_test/) you need to provide your own user token.  
 #' The present script is available under the [GNU-GPL V3](https://www.gnu.org/licenses/gpl-3.0.en.html) and comes with ABSOLUTELY NO WARRANTY.
