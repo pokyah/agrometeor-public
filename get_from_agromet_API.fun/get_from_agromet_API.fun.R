@@ -53,7 +53,9 @@
 # Declaration of the function to get pameseb data from the Pameseb API 
 get_fom_agromet_API.fun <- function(user_token.chr, table_name.chr, sensors.chr, stations_ids.chr, dfrom.chr, dto.chr){
   
-  # Load required libraries if not loaded
+  # Load required libraries 
+  library("jsonlite")
+  library("httr")
   
   # Clean the eventual spaces in the sensors.chr string
   sensors.chr <- gsub(" ","",sensors.chr)
@@ -85,6 +87,11 @@ get_fom_agromet_API.fun <- function(user_token.chr, table_name.chr, sensors.chr,
   stations_meta.df <- results.l$references$stations
   
   # Group in a list
+  build_named_list.fun <- function(...) { 
+    l <- list(...)
+    names(l) <- sapply(substitute(list(...)), deparse)[-1]
+    l 
+  }
   results__and_stations_meta.l <- build_named_list.fun(stations_meta.df, results.df)
   
   # Present a quick overview of the results in the console

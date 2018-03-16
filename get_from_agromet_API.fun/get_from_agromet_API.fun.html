@@ -157,7 +157,9 @@ Formatted <code>yyyy-mm-dd</code> excepted for <code>get_tmy</code> where you mu
 <pre class="r"><code># Declaration of the function to get pameseb data from the Pameseb API 
 get_fom_agromet_API.fun &lt;- function(user_token.chr, table_name.chr, sensors.chr, stations_ids.chr, dfrom.chr, dto.chr){
   
-  # Load required libraries if not loaded
+  # Load required libraries 
+  library(&quot;jsonlite&quot;)
+  library(&quot;httr&quot;)
   
   # Clean the eventual spaces in the sensors.chr string
   sensors.chr &lt;- gsub(&quot; &quot;,&quot;&quot;,sensors.chr)
@@ -189,6 +191,11 @@ get_fom_agromet_API.fun &lt;- function(user_token.chr, table_name.chr, sensors.c
   stations_meta.df &lt;- results.l$references$stations
   
   # Group in a list
+  build_named_list.fun &lt;- function(...) { 
+    l &lt;- list(...)
+    names(l) &lt;- sapply(substitute(list(...)), deparse)[-1]
+    l 
+  }
   results__and_stations_meta.l &lt;- build_named_list.fun(stations_meta.df, results.df)
   
   # Present a quick overview of the results in the console
