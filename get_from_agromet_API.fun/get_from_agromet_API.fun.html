@@ -127,7 +127,7 @@ $(document).ready(function () {
 
 <div id="presentation" class="section level2">
 <h2>Presentation</h2>
-<p>This document presents an R script that allows you to retrieve data from the <a href="https://app.pameseb.be/fr/pages/api_call_test/">AGROMET API V1</a>.<br />
+<p>This document presents the R script that allows you to retrieve data from the <a href="https://app.pameseb.be/fr/pages/api_call_test/">AGROMET API V1</a>.<br />
 The function to get data from the official Agromet API is called <code>get_from_agromet_API.fun</code>.</p>
 </div>
 <div id="function-arguments-definition" class="section level2">
@@ -198,11 +198,6 @@ get_fom_agromet_API.fun &lt;- function(user_token.chr, table_name.chr, sensors.c
   # Return the results and the station_meta dataframes stored in as a list 
   return(results__and_stations_meta.l)
 }</code></pre>
-</div>
-<div id="utilization" class="section level2">
-<h2>Utilization</h2>
-<p>To use it, you can copy and paste the code here above somewhere in your R project folder.<br />
-An other, nicer solution, is to load it from gitlab so that you are sure to always work with the latest version (for this, you will of course need an effective internet connection).</p>
 </div>
 <div id="terms-of-service" class="section level2">
 <h2>Terms of service</h2>
