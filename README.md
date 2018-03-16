@@ -23,11 +23,10 @@ source_github <- function(github_url.chr) {
 ```
 To get the github_url of the script, right click on the download link and select "copy link address"
 
-## R Script to get data from the Agromet API V1
+## R Scripts
 
-`get_from_agromet_API.fun.R` - [doc](./get_from_agromet_API.fun/get_from_agromet_API.fun.html)  
-
-__[>> download <<](./get_from_agromet_API.fun/get_from_agromet_API.fun.R)__
+| `get_from_agromet_API.fun.R` 	| get data from the Agromet API V1 	| __[>> download <<](./get_from_agromet_API.fun/get_from_agromet_API.fun.R)__ 	| [doc](./get_from_agromet_API.fun/get_from_agromet_API.fun.html) 	|   	|
+|------------------------------	|----------------------------------	|-----------------------------------------------------------------------------	|-----------------------------------------------------------------	|---	|
 
 ---------------------
 
