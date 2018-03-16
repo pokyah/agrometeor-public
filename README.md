@@ -27,6 +27,6 @@ __[>> download <<](./get_from_agromet_API.fun/get_from_agromet_API.fun.R)__
 
 ---------------------
 
-Maintained by Thomas Goossens (t.goossens@cra.wallonie.be).
+Maintained by Thomas Goossens (t.goossens@cra.wallonie.be)  
 *Copyright : Thomas Goossens 2018*
 
