@@ -9,7 +9,7 @@ Want to contribute ? Feel free to create a pull request.
 
  * [LICENSE](./LICENSE)
  * [_config.yml](./_config.yml)
- * [README.md](./READMEbu.md)
+ * [README.md](./README.md)
  * [get_from_agromet_API.fun](./get_from_agromet_API.fun)
    * [get_from_agromet_API.fun.R](./get_from_agromet_API.fun/get_from_agromet_API.fun.R)
    * [get_from_agromet_API.fun.html](./get_from_agromet_API.fun/get_from_agromet_API.fun.html)
