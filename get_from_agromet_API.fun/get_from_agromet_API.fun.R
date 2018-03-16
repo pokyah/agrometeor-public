@@ -15,8 +15,7 @@
 
 #+ ---------------------------------
 #' ## Presentation
-#' This document presents an R script that allows you to retrieve data from the [AGROMET API V1](https://app.pameseb.be/fr/pages/api_call_test/).  
-#' If you find a bug, please open an issue and if you want to contribute, feel free to create a pull request.  
+#' This document presents the R script that allows you to retrieve data from the [AGROMET API V1](https://app.pameseb.be/fr/pages/api_call_test/).  
 #' The function to get data from the official Agromet API is called `get_from_agromet_API.fun`.
 #+ presentation,echo=TRUE,warning=FALSE,message=FALSE,error=FALSE, results='asis'
 
@@ -95,6 +94,13 @@ get_fom_agromet_API.fun <- function(user_token.chr, table_name.chr, sensors.chr,
   # Return the results and the station_meta dataframes stored in as a list 
   return(results__and_stations_meta.l)
 }
+
+
+#+ ---------------------------------
+#' ## Utilization
+#' To use it, you can copy and paste the code here above somewhere in your R project folder.  
+#' An other, nicer solution, is to load it from gitlab so that you are sure to always work with the latest version (for this, you will of course need an effective internet connection).   
+#+ utilization,echo=TRUE,warning=FALSE,message=FALSE,error=FALSE, results='asis'
 
 
 #+ ---------------------------------
