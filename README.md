@@ -5,6 +5,16 @@ The present work is under major development phase.
 If you find a bug or want to suggest an idea, please open an issue.  
 Want to contribute ? Feel free to create a pull request.  
 
+## Project tree
+
+ * [LICENSE](./LICENSE)
+ * [_config.yml](./_config.yml)
+ * [README.md](./READMEbu.md)
+ * [get_from_agromet_API.fun](./get_from_agromet_API.fun)
+   * [get_from_agromet_API.fun.R](./get_from_agromet_API.fun/get_from_agromet_API.fun.R)
+   * [get_from_agromet_API.fun.html](./get_from_agromet_API.fun/get_from_agromet_API.fun.html)
+ * [tree-md.sh](./tree-md.sh)
+
 ## How to use the R scripts ? 
 
 2 ways : 
