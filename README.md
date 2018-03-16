@@ -3,10 +3,7 @@ Welcome to the agrometeor-public, the publicly available R scripts repository re
 ## R Script to get data from the Agromet API V1
 
 * `get_from_agromet_API.fun.R` :  
-This script allows you to query the AGROMET database : [get_from_agromet_API.fun.R](./documentation/get_from_agromet_API.fun.md)
-
-
-
+[get_from_agromet_API.fun.R](./documentation/get_from_agromet_API.fun.html)
 
 
 Maintained by Thomas Goossens (t.goossens@cra.wallonie.be).
