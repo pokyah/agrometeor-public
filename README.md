@@ -1,4 +1,8 @@
-Welcome to the agrometeor-public, the publicly available R scripts repository related to the [Agromet project](http://www.cra.wallonie.be/fr/agromet).
+Welcome to the __agrometeor-public__ repository, the publicly available R scripts repository related to the [Agromet project](http://www.cra.wallonie.be/fr/agromet).
+
+The present work is under major development phase.
+If you find a bug or want to suggest an idea, please open an issue.  
+Want to contribute ? Feel free to create a pull request.  
 
 ## How to use the R scripts ? 
 
