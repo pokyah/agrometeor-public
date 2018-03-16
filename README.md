@@ -21,8 +21,9 @@ To get the github_url of the script, right click on the download link and select
 
 ## R Script to get data from the Agromet API V1
 
-`get_from_agromet_API.fun.R` - [doc](./get_from_agromet_API.fun/get_from_agromet_API.fun.html)
-__[download](./get_from_agromet_API.fun/get_from_agromet_API.fun.R)__
+`get_from_agromet_API.fun.R` - [doc](./get_from_agromet_API.fun/get_from_agromet_API.fun.html)  
+
+__[>> download <<](./get_from_agromet_API.fun/get_from_agromet_API.fun.R)__
 
 ---------------------
 
