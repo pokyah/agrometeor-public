@@ -1,6 +1,6 @@
 Welcome to the __agrometeor-public__ repository, the publicly available R scripts repository related to the [Agromet project](http://www.cra.wallonie.be/fr/agromet).
 
-The live website is available @ [https://pokyah.github.io/agrometeor-public]
+The live website is available @ [https://pokyah.github.io/agrometeor-public](https://pokyah.github.io/agrometeor-public)
 
 The present work is under major development phase.
 If you find a bug or want to suggest an idea, please open an issue.  
