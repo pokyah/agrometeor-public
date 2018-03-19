@@ -106,7 +106,7 @@ get_fom_agromet_API.fun <- function(user_token.chr, table_name.chr, sensors.chr,
 #+ ---------------------------------
 #' ## Terms of service 
 #' To use the [AGROMET API](https://app.pameseb.be/fr/pages/api_call_test/) you need to provide your own user token.  
-#' The present script is available under the [GNU-GPL V3](https://www.gnu.org/licenses/gpl-3.0.en.html) and comes with ABSOLUTELY NO WARRANTY.
+#' The present script is available under the [GNU-GPL V3](https://www.gnu.org/licenses/gpl-3.0.en.html) license and comes with ABSOLUTELY NO WARRANTY.
 #' 
 #' Copyright : Thomas Goossens - t.goossens@cra.wallonie.be 2018.  
 #' 
