@@ -120,7 +120,7 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">R script to retrieve Agromet API data</h1>
 <h4 class="author"><em>Thomas Goossens (CRA-W) - <a href="mailto:t.goossens@cra.wallonie.be">t.goossens@cra.wallonie.be</a></em></h4>
-<h4 class="date"><em> 16-03-2018<br /></em></h4>
+<h4 class="date"><em> 19-03-2018<br /></em></h4>
 
 </div>
 
@@ -152,10 +152,10 @@ Charachter vector specifying the date to which you want data.<br />
 Formatted <code>yyyy-mm-dd</code> excepted for <code>get_tmy</code> where you must provide <code>mm-dd</code></p></li>
 </ul>
 </div>
-<div id="code" class="section level2">
-<h2>Code</h2>
+<div id="function-declaration" class="section level2">
+<h2>function declaration</h2>
 <pre class="r"><code># Declaration of the function to get pameseb data from the Pameseb API 
-get_fom_agromet_API.fun &lt;- function(user_token.chr, table_name.chr, sensors.chr, stations_ids.chr, dfrom.chr, dto.chr){
+get_from_agromet_API.fun &lt;- function(user_token.chr, table_name.chr, sensors.chr, stations_ids.chr, dfrom.chr, dto.chr){
   
   # Load required libraries 
   library(&quot;jsonlite&quot;)
@@ -209,7 +209,7 @@ get_fom_agromet_API.fun &lt;- function(user_token.chr, table_name.chr, sensors.c
 <div id="terms-of-service" class="section level2">
 <h2>Terms of service</h2>
 <p>To use the <a href="https://app.pameseb.be/fr/pages/api_call_test/">AGROMET API</a> you need to provide your own user token.<br />
-The present script is available under the <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">GNU-GPL V3</a> and comes with ABSOLUTELY NO WARRANTY.</p>
+The present script is available under the <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">GNU-GPL V3</a> license and comes with ABSOLUTELY NO WARRANTY.</p>
 <p>Copyright : Thomas Goossens - <a href="mailto:t.goossens@cra.wallonie.be">t.goossens@cra.wallonie.be</a> 2018.</p>
 <p><em>(This document was generated using <a href="https://www.r-project.org/">R software</a> with the <a href="https://deanattali.com/2015/03/24/knitrs-best-hidden-gem-spin/">knitr library</a>)</em>.</p>
 </div>

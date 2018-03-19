@@ -47,11 +47,11 @@
 #+ setup,echo=TRUE,warning=FALSE,message=FALSE,error=FALSE
 
 #+ ---------------------------------
-#' ## Code
+#' ## function declaration
 #+ function,echo=TRUE,warning=FALSE,message=FALSE,error=FALSE, results='asis'
 
 # Declaration of the function to get pameseb data from the Pameseb API 
-get_fom_agromet_API.fun <- function(user_token.chr, table_name.chr, sensors.chr, stations_ids.chr, dfrom.chr, dto.chr){
+get_from_agromet_API.fun <- function(user_token.chr, table_name.chr, sensors.chr, stations_ids.chr, dfrom.chr, dto.chr){
   
   # Load required libraries 
   library("jsonlite")
