@@ -7,20 +7,23 @@ Want to contribute ? Feel free to create a pull request.
 
 ## Project tree
 
- * [LICENSE](./LICENSE)
- * [_config.yml](./_config.yml)
- * [README.md](./README.md)
- * [get_from_agromet_API.fun](./get_from_agromet_API.fun)
-   * [get_from_agromet_API.fun.R](./get_from_agromet_API.fun/get_from_agromet_API.fun.R)
-   * [get_from_agromet_API.fun.html](./get_from_agromet_API.fun/get_from_agromet_API.fun.html)
- * [tree-md.sh](./tree-md.sh)
+* [LICENSE](./LICENSE)
+* [_config.yml](./_config.yml)
+* [tree-md.sh](./tree-md.sh)
+* [get_from_agromet_API.fun](./get_from_agromet_API.fun)
+  * [get_from_agromet_API.fun.R](./get_from_agromet_API.fun/get_from_agromet_API.fun.R)
+  * [get_from_agromet_API.fun.html](./get_from_agromet_API.fun/get_from_agromet_API.fun.html)
+* [README.md](./README.md)
+* [prepare_agromet_API_data.fun](./prepare_agromet_API_data.fun)
+    * [prepare_agromet_API_data.fun.R](./prepare_agromet_API_data.fun/prepare_agromet_API_data.fun.R)
+    * [prepare_agromet_API_data.fun.html](./prepare_agromet_API_data.fun/prepare_agromet_API_data.fun.html)
 
-## How to use the R scripts ? 
+## How to use the R scripts ?
 
-2 ways : 
+2 ways :
 
 1. Download using this page and add to your R project folder (if you want to stay up-to-date, you will have to manually download the latest version of the scripts)
-2. From within R, source the up-to-date version from this github repository. To do so, you will need this little snippet : 
+2. From within R, source the up-to-date version from this github repository. To do so, you will need this little snippet :
 
 ```R
 source_github <- function(github_url.chr) {
@@ -34,10 +37,13 @@ source_github <- function(github_url.chr) {
 ```
 To get the github_url of the script, right click on the download link and select "copy link address"
 
-## R Scripts 
+## R Scripts
 
 * `get_from_agromet_API.fun.R` :  get data from the Agromet API V1  
-(__[>> download <<](https://raw.githubusercontent.com/pokyah/agrometeor-public/master/get_from_agromet_API.fun/get_from_agromet_API.fun.R)__ - [doc](./get_from_agromet_API.fun/get_from_agromet_API.fun.html)) 	
+(__[>> download <<](https://raw.githubusercontent.com/pokyah/agrometeor-public/master/get_from_agromet_API.fun/get_from_agromet_API.fun.R)__ - [doc](./get_from_agromet_API.fun/get_from_agromet_API.fun.html))
+
+* `prepare_agromet_API_data.fun` :  Make the character data received from Agromet API V1 data R-friendly
+(__[>> download <<](https://raw.githubusercontent.com/pokyah/agrometeor-public/master/prepare_agromet_API_data.fun/prepare_agromet_API_data.fun.R)__ - [doc](./prepare_agromet_API_data.fun/prepare_agromet_API_data.fun.html))
 
 
 ---------------------
@@ -47,4 +53,3 @@ To get the github_url of the script, right click on the download link and select
 
 Maintained by Thomas Goossens (t.goossens@cra.wallonie.be)  
 *Copyright : Thomas Goossens 2018*
-
