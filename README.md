@@ -20,7 +20,7 @@ Want to contribute ? Feel free to create a pull request.
 
 ## How to use the R scripts ?
 
-2 ways :
+3 ways :
 
 1. Download using this page and add to your R project folder (if you want to stay up-to-date, you will have to manually download the latest version of the scripts)
 2. From within R, source the up-to-date version from this github repository. To do so, you will need this little snippet :
@@ -36,6 +36,8 @@ source_github <- function(github_url.chr) {
 }  
 ```
 To get the github_url of the script, right click on the download link and select "copy link address"
+
+3. __If your are familiar with git__, clone this repository and source it in your R script. Doing so, allows you to eventually suggest pull request for code improvment.
 
 ## R Scripts
 
