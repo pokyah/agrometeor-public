@@ -22,22 +22,22 @@ Want to contribute ? Feel free to create a pull request.
 
 3 ways :
 
-1. Download using this page and add to your R project folder (if you want to stay up-to-date, you will have to manually download the latest version of the scripts)
-2. From within R, source the up-to-date version from this github repository. To do so, you will need this little snippet :
+1. __Download using this page__ and add to your R project folder (if you want to stay up-to-date, you will have to manually download the latest version of the scripts)
+2. __From within R, source the up-to-date version from this github repository__. To do so, you will need this little snippet :
 
-```R
-source_github <- function(github_url.chr) {
-  # load required package
-  library(RCurl)
+  ```R
+  source_github <- function(github_url.chr) {
+    # load required package
+    library(RCurl)
 
-  # read script lines from github and evaluate
-  script <- getURL(github_url.chr, ssl.verifypeer = FALSE)
-  eval(parse(text = script),envir=.GlobalEnv)
-}  
-```
-To get the github_url of the script, right click on the download link and select "copy link address"
+    # read script lines from github and evaluate
+    script <- getURL(github_url.chr, ssl.verifypeer = FALSE)
+    eval(parse(text = script),envir=.GlobalEnv)
+  }  
+  ```
+  To get the github_url of the script, right click on the download link and select "copy link address"
 
-3. __If your are familiar with git__, fork this repository and source it in your R script. Doing so, allows you to eventually suggest pull request for code improvment.
+3. __If your are familiar with git__, fork this repository and source it in your R script. Doing so, allows you to eventually suggest pull request for code improvement.
 
 ## R Scripts
 
