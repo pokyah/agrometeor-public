@@ -37,7 +37,7 @@ source_github <- function(github_url.chr) {
 ```
 To get the github_url of the script, right click on the download link and select "copy link address"
 
-3. __If your are familiar with git__, clone this repository and source it in your R script. Doing so, allows you to eventually suggest pull request for code improvment.
+3. __If your are familiar with git__, fork this repository and source it in your R script. Doing so, allows you to eventually suggest pull request for code improvment.
 
 ## R Scripts
 
