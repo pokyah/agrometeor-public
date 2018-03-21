@@ -44,7 +44,7 @@ Want to contribute ? Feel free to create a pull request.
 * `get_from_agromet_API.fun.R` :  get data from the Agromet API V1  
 (__[>> download <<](https://raw.githubusercontent.com/pokyah/agrometeor-public/master/get_from_agromet_API.fun/get_from_agromet_API.fun.R)__ - [doc](./get_from_agromet_API.fun/get_from_agromet_API.fun.html))
 
-* `prepare_agromet_API_data.fun` :  Make the character data received from Agromet API V1 data R-friendly  
+* `prepare_agromet_API_data.fun.R` :  Make the character data received from Agromet API V1 data R-friendly  
 (__[>> download <<](https://raw.githubusercontent.com/pokyah/agrometeor-public/master/prepare_agromet_API_data.fun/prepare_agromet_API_data.fun.R)__ - [doc](./prepare_agromet_API_data.fun/prepare_agromet_API_data.fun.html))
 
 

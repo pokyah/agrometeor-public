@@ -8,7 +8,7 @@
 #'    toc_float:
 #'      collapsed: false
 #'      smooth_scroll: true
-#'title: "R script to prepare data received from Agromet API data (from string to numeric and posix)"
+#'title: "Make the character data received from Agromet API data R-friendly"
 #'date: \`r format(Sys.Date(), " %d-%m-%Y")`\
 #'---
 
@@ -26,8 +26,11 @@
 # Declaration of the function
 prepare_agromet_API_data.fun  <- function(meta_and_records.l){
   
+  # load dplyr library 
+  library(dplyr)
+  
   # Create the vector of all the existing sensors in the Agromet db
-  sensors.chr <- c["tsa", "tha", "hra", "tsf", "tss", "ens", "dvt", "vvt", "plu", "hct", "ts2", "th2", "hr2"]
+  sensors.chr <- c("tsa", "tha", "hra", "tsf", "tss", "ens", "dvt", "vvt", "plu", "hct", "ts2", "th2", "hr2")
 
   # Create the stations positions df
   stations_meta.df <- meta_and_records.l[[1]]
