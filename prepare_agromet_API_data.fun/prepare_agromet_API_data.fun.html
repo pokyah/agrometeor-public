@@ -137,6 +137,19 @@ prepare_agromet_API_data.fun  &lt;- function(meta_and_records.l){
   # load dplyr library 
   library(dplyr)
   
+  # declaration of the function to convert sunrise and sunset columns to chron objects
+  convertSun &lt;- function(sunHour.chr){
+    
+    # transform to datetime format
+    sunHour.posix &lt;- strptime(x = sunHour.chr, format = &quot;%H:%M:%S&quot;)
+    
+    # only keep the hour part using library chron
+    sunHour.chron &lt;- times(format(sunHour.posix, &quot;%H:%M:%S&quot;))
+    
+    # retourn the sunHour.chron object
+    return(sunHour.chron)
+  }
+  
   # Create the vector of all the existing sensors in the Agromet db
   sensors.chr &lt;- c(&quot;tsa&quot;, &quot;tha&quot;, &quot;hra&quot;, &quot;tsf&quot;, &quot;tss&quot;, &quot;ens&quot;, &quot;dvt&quot;, &quot;vvt&quot;, &quot;plu&quot;, &quot;hct&quot;, &quot;ts2&quot;, &quot;th2&quot;, &quot;hr2&quot;)
 
@@ -152,10 +165,10 @@ prepare_agromet_API_data.fun  &lt;- function(meta_and_records.l){
   stations_meta.df &lt;- stations_meta.df %&gt;% dplyr::select(-metadata)
   stations_meta.df &lt;- bind_cols(stations_meta.df, tmy_period.df)
   
-  # Transform mtime column to posix format for easier time handling
+  # Transform from &amp; to column to posix format for easier time handling
   data.df &lt;- stations_meta.df %&gt;% 
-    mutate_at(&quot;from&quot;, as.POSIXct, format = &quot;%Y-%m-%dT%H:%M:%SZ&quot;) %&gt;%
-    mutate_at(&quot;to&quot;, as.POSIXct, format = &quot;%Y-%m-%dT%H:%M:%SZ&quot;)
+    mutate_at(&quot;from&quot;, as.POSIXct, format = &quot;%Y-%m-%dT%H:%M:%S&quot;, tz = &quot;GMT-2&quot;) %&gt;%
+    mutate_at(&quot;to&quot;, as.POSIXct, format = &quot;%Y-%m-%dT%H:%M:%S&quot;, tz = &quot;GMT-2&quot;)
     
   if(!is.null(records.df)){
     # Join stations_meta and records by &quot;id&quot;
@@ -164,6 +177,11 @@ prepare_agromet_API_data.fun  &lt;- function(meta_and_records.l){
     # Transform sensors.chr columns from character to numeric values
     data.df &lt;- data.df %&gt;% mutate_at(vars(one_of(sensors.chr)), funs(as.numeric))
     
+    # Transform sunrise/sunset columns to times format for easier time handling
+    if(!is.null(data.df$sunrise)){
+      data.df &lt;- data.df %&gt;% mutate_at(c(&quot;sunrise&quot;,&quot;sunset&quot;), convertSun)
+    }
+
     # Transform mtime column to posix format for easier time handling
     data.df &lt;- data.df %&gt;% mutate_at(&quot;mtime&quot;, as.POSIXct, format = &quot;%Y-%m-%dT%H:%M:%SZ&quot;)
     

@@ -162,7 +162,10 @@ get_from_agromet_API.fun &lt;- function(user_token.chr, table_name.chr, sensors.
   library(&quot;httr&quot;)
   
   # Clean the eventual spaces in the sensors.chr string
-  sensors.chr &lt;- gsub(&quot; &quot;,&quot;&quot;,sensors.chr)
+  if(!is.null(sensors.chr)){
+    sensors.chr &lt;- gsub(&quot; &quot;,&quot;&quot;,sensors.chr)
+  }
+
   
   # Build the proper table API call URL
   api_table_url.chr &lt;- paste(&quot;https://app.pameseb.be/agromet/api/v1&quot;, table_name.chr, sensors.chr, stations_ids.chr, dfrom.chr, dto.chr, sep=&quot;/&quot;)
