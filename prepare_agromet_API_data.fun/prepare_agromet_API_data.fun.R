@@ -29,6 +29,19 @@ prepare_agromet_API_data.fun  <- function(meta_and_records.l){
   # load dplyr library 
   library(dplyr)
   
+  # declaration of the function to convert sunrise and sunset columns to chron objects
+  convertSun <- function(sunHour.chr){
+    
+    # transform to datetime format
+    sunHour.posix <- strptime(x = sunHour.chr, format = "%H:%M:%S")
+    
+    # only keep the hour part using library chron
+    sunHour.chron <- times(format(sunHour.posix, "%H:%M:%S"))
+    
+    # retourn the sunHour.chron object
+    return(sunHour.chron)
+  }
+  
   # Create the vector of all the existing sensors in the Agromet db
   sensors.chr <- c("tsa", "tha", "hra", "tsf", "tss", "ens", "dvt", "vvt", "plu", "hct", "ts2", "th2", "hr2")
 
@@ -44,10 +57,10 @@ prepare_agromet_API_data.fun  <- function(meta_and_records.l){
   stations_meta.df <- stations_meta.df %>% dplyr::select(-metadata)
   stations_meta.df <- bind_cols(stations_meta.df, tmy_period.df)
   
-  # Transform mtime column to posix format for easier time handling
+  # Transform from & to column to posix format for easier time handling
   data.df <- stations_meta.df %>% 
-    mutate_at("from", as.POSIXct, format = "%Y-%m-%dT%H:%M:%SZ") %>%
-    mutate_at("to", as.POSIXct, format = "%Y-%m-%dT%H:%M:%SZ")
+    mutate_at("from", as.POSIXct, format = "%Y-%m-%dT%H:%M:%S", tz = "GMT-2") %>%
+    mutate_at("to", as.POSIXct, format = "%Y-%m-%dT%H:%M:%S", tz = "GMT-2")
     
   if(!is.null(records.df)){
     # Join stations_meta and records by "id"
@@ -56,6 +69,11 @@ prepare_agromet_API_data.fun  <- function(meta_and_records.l){
     # Transform sensors.chr columns from character to numeric values
     data.df <- data.df %>% mutate_at(vars(one_of(sensors.chr)), funs(as.numeric))
     
+    # Transform sunrise/sunset columns to times format for easier time handling
+    if(!is.null(data.df$sunrise)){
+      data.df <- data.df %>% mutate_at(c("sunrise","sunset"), convertSun)
+    }
+
     # Transform mtime column to posix format for easier time handling
     data.df <- data.df %>% mutate_at("mtime", as.POSIXct, format = "%Y-%m-%dT%H:%M:%SZ")
     

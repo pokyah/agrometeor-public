@@ -58,7 +58,10 @@ get_from_agromet_API.fun <- function(user_token.chr, table_name.chr, sensors.chr
   library("httr")
   
   # Clean the eventual spaces in the sensors.chr string
-  sensors.chr <- gsub(" ","",sensors.chr)
+  if(!is.null(sensors.chr)){
+    sensors.chr <- gsub(" ","",sensors.chr)
+  }
+
   
   # Build the proper table API call URL
   api_table_url.chr <- paste("https://app.pameseb.be/agromet/api/v1", table_name.chr, sensors.chr, stations_ids.chr, dfrom.chr, dto.chr, sep="/")
