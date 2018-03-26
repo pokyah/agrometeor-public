@@ -120,7 +120,7 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">Make the character data received from Agromet API data R-friendly</h1>
 <h4 class="author"><em>Thomas Goossens (CRA-W) - <a href="mailto:t.goossens@cra.wallonie.be">t.goossens@cra.wallonie.be</a></em></h4>
-<h4 class="date"><em> 21-03-2018<br /></em></h4>
+<h4 class="date"><em> 26-03-2018<br /></em></h4>
 
 </div>
 
@@ -132,7 +132,7 @@ $(document).ready(function () {
 <div id="function-declaration" class="section level2">
 <h2>Function declaration</h2>
 <pre class="r"><code># Declaration of the function
-prepare_agromet_API_data.fun  &lt;- function(meta_and_records.l){
+prepare_agromet_API_data.fun  &lt;- function(meta_and_records.l, table.chr){
   
   # load dplyr library 
   library(dplyr)
@@ -145,24 +145,44 @@ prepare_agromet_API_data.fun  &lt;- function(meta_and_records.l){
 
   # Create the records df
   records.df &lt;- meta_and_records.l[[2]]
-
-  # In stations_meta.df, tmy_period information are stored as df stored inside df. We need to extract these from this inner level and add as new columns
-  tmy_period.df &lt;- stations_meta.df$metadata$tmy_period
-  stations_meta.df &lt;- stations_meta.df %&gt;% dplyr::select(-metadata)
-  stations_meta.df &lt;- bind_cols(stations_meta.df, tmy_period.df)
-
-  # Join stations_meta and records by &quot;id&quot;
-  records.df &lt;- left_join(stations_meta.df, records.df, by=c(&quot;id&quot;))
-
-  # Transform sensors.chr columns from character to numeric values
-  records.df &lt;- records.df %&gt;% mutate_at(vars(one_of(sensors.chr)), funs(as.numeric))
-
-  # Transform mtime column to posix format for easier time handling
-  records.df &lt;- records.df %&gt;% mutate_at(&quot;mtime&quot;, as.POSIXct, format = &quot;%Y-%m-%dT%H:%M:%SZ&quot;)
-
-  # Transform meta altitude, longitude, latitude columns from character to numeric
-  records.df &lt;- records.df %&gt;% mutate_at(vars(c(&quot;altitude&quot;, &quot;longitude&quot;, &quot;latitude&quot;)), funs(as.numeric))
-
+  
+  # The query with table = station does not provide records but only metadata stored in records.df
+  if(table.chr == &quot;station&quot;){
+    stations_meta.df &lt;- records.df
+    records.df &lt;- NULL
+    
+    # In stations_meta.df, tmy_period information are stored as df stored inside df. We need to extract these from this inner level and add as new columns
+    tmy_period.df &lt;- stations_meta.df$metadata$tmy_period
+    
+    stations_meta.df &lt;- stations_meta.df %&gt;% dplyr::select(-metadata)
+    stations_meta.df &lt;- bind_cols(stations_meta.df, tmy_period.df)
+    
+    # Join stations_meta and records by &quot;id&quot;
+    records.df &lt;- stations_meta.df
+  
+    # Transform meta altitude, longitude, latitude columns from character to numeric
+    records.df &lt;- records.df %&gt;% mutate_at(vars(c(&quot;altitude&quot;, &quot;longitude&quot;, &quot;latitude&quot;)), funs(as.numeric))
+    
+  } else{
+    # In stations_meta.df, tmy_period information are stored as df stored inside df. We need to extract these from this inner level and add as new columns
+    tmy_period.df &lt;- stations_meta.df$metadata$tmy_period
+    
+    stations_meta.df &lt;- stations_meta.df %&gt;% dplyr::select(-metadata)
+    stations_meta.df &lt;- bind_cols(stations_meta.df, tmy_period.df)
+    
+    # Join stations_meta and records by &quot;id&quot;
+    records.df &lt;- left_join(stations_meta.df, records.df, by=c(&quot;id&quot;))
+    
+    # Transform sensors.chr columns from character to numeric values
+    records.df &lt;- records.df %&gt;% mutate_at(vars(one_of(sensors.chr)), funs(as.numeric))
+    
+    # Transform mtime column to posix format for easier time handling
+    records.df &lt;- records.df %&gt;% mutate_at(&quot;mtime&quot;, as.POSIXct, format = &quot;%Y-%m-%dT%H:%M:%SZ&quot;)
+    
+    # Transform meta altitude, longitude, latitude columns from character to numeric
+    records.df &lt;- records.df %&gt;% mutate_at(vars(c(&quot;altitude&quot;, &quot;longitude&quot;, &quot;latitude&quot;)), funs(as.numeric))
+  }
+  
   # Return the preperly typed and structured records dataframe.
   return(records.df)
 }</code></pre>

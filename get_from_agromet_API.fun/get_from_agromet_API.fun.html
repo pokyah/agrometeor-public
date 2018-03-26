@@ -120,7 +120,7 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">R script to retrieve Agromet API data</h1>
 <h4 class="author"><em>Thomas Goossens (CRA-W) - <a href="mailto:t.goossens@cra.wallonie.be">t.goossens@cra.wallonie.be</a></em></h4>
-<h4 class="date"><em> 19-03-2018<br /></em></h4>
+<h4 class="date"><em> 26-03-2018<br /></em></h4>
 
 </div>
 
@@ -155,7 +155,7 @@ Formatted <code>yyyy-mm-dd</code> excepted for <code>get_tmy</code> where you mu
 <div id="function-declaration" class="section level2">
 <h2>function declaration</h2>
 <pre class="r"><code># Declaration of the function to get pameseb data from the Pameseb API 
-get_from_agromet_API.fun &lt;- function(user_token.chr, table_name.chr, sensors.chr, stations_ids.chr, dfrom.chr, dto.chr){
+get_from_agromet_API.fun &lt;- function(user_token.chr, table_name.chr, sensors.chr=NULL, stations_ids.chr, dfrom.chr=NULL, dto.chr=NULL){
   
   # Load required libraries 
   library(&quot;jsonlite&quot;)
@@ -191,19 +191,14 @@ get_from_agromet_API.fun &lt;- function(user_token.chr, table_name.chr, sensors.
   stations_meta.df &lt;- results.l$references$stations
   
   # Group in a list
-  build_named_list.fun &lt;- function(...) { 
-    l &lt;- list(...)
-    names(l) &lt;- sapply(substitute(list(...)), deparse)[-1]
-    l 
-  }
-  results__and_stations_meta.l &lt;- build_named_list.fun(stations_meta.df, results.df)
-  
+  results_and_stations_meta.l &lt;- list(stations_meta.df = stations_meta.df, records.df = results.df)
+
   # Present a quick overview of the results in the console
   cat(&quot;Overview of the queried results : \n&quot;)
-  print.data.frame(head(results__and_stations_meta.l$results.df))
+  print.data.frame(head(results_and_stations_meta.l$records.df))
   
   # Return the results and the station_meta dataframes stored in as a list 
-  return(results__and_stations_meta.l)
+  return(results_and_stations_meta.l)
 }</code></pre>
 </div>
 <div id="terms-of-service" class="section level2">

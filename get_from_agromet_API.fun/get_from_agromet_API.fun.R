@@ -87,19 +87,14 @@ get_from_agromet_API.fun <- function(user_token.chr, table_name.chr, sensors.chr
   stations_meta.df <- results.l$references$stations
   
   # Group in a list
-  build_named_list.fun <- function(...) { 
-    l <- list(...)
-    names(l) <- sapply(substitute(list(...)), deparse)[-1]
-    l 
-  }
-  results__and_stations_meta.l <- build_named_list.fun(stations_meta.df, results.df)
-  
+  results_and_stations_meta.l <- list(stations_meta.df = stations_meta.df, records.df = results.df)
+
   # Present a quick overview of the results in the console
   cat("Overview of the queried results : \n")
-  print.data.frame(head(results__and_stations_meta.l$results.df))
+  print.data.frame(head(results_and_stations_meta.l$records.df))
   
   # Return the results and the station_meta dataframes stored in as a list 
-  return(results__and_stations_meta.l)
+  return(results_and_stations_meta.l)
 }
 
 
