@@ -24,7 +24,7 @@
 #+ function,echo=TRUE,warning=FALSE,message=FALSE,error=FALSE, results='asis'
 
 # Declaration of the function
-prepare_agromet_API_data.fun  <- function(meta_and_records.l, table.chr){
+prepare_agromet_API_data.fun  <- function(meta_and_records.l){
   
   # load dplyr library 
   library(dplyr)
@@ -38,45 +38,34 @@ prepare_agromet_API_data.fun  <- function(meta_and_records.l, table.chr){
   # Create the records df
   records.df <- meta_and_records.l[[2]]
   
-  # The query with table = station does not provide records but only metadata stored in records.df
-  if(table.chr == "station"){
-    stations_meta.df <- records.df
-    records.df <- NULL
-    
-    # In stations_meta.df, tmy_period information are stored as df stored inside df. We need to extract these from this inner level and add as new columns
-    tmy_period.df <- stations_meta.df$metadata$tmy_period
-    
-    stations_meta.df <- stations_meta.df %>% dplyr::select(-metadata)
-    stations_meta.df <- bind_cols(stations_meta.df, tmy_period.df)
-    
-    # Join stations_meta and records by "id"
-    records.df <- stations_meta.df
+  # In stations_meta.df, tmy_period information are stored as df stored inside df. We need to extract these from this inner level and add as new columns
+  tmy_period.df <- stations_meta.df$metadata$tmy_period
   
-    # Transform meta altitude, longitude, latitude columns from character to numeric
-    records.df <- records.df %>% mutate_at(vars(c("altitude", "longitude", "latitude")), funs(as.numeric))
+  stations_meta.df <- stations_meta.df %>% dplyr::select(-metadata)
+  stations_meta.df <- bind_cols(stations_meta.df, tmy_period.df)
+  
+  # Transform mtime column to posix format for easier time handling
+  data.df <- stations_meta.df %>% 
+    mutate_at("from", as.POSIXct, format = "%Y-%m-%dT%H:%M:%SZ") %>%
+    mutate_at("to", as.POSIXct, format = "%Y-%m-%dT%H:%M:%SZ")
     
-  } else{
-    # In stations_meta.df, tmy_period information are stored as df stored inside df. We need to extract these from this inner level and add as new columns
-    tmy_period.df <- stations_meta.df$metadata$tmy_period
-    
-    stations_meta.df <- stations_meta.df %>% dplyr::select(-metadata)
-    stations_meta.df <- bind_cols(stations_meta.df, tmy_period.df)
-    
+  if(!is.null(records.df)){
     # Join stations_meta and records by "id"
-    records.df <- left_join(stations_meta.df, records.df, by=c("id"))
+    data.df <- left_join(data.df, records.df, by=c("id"))
     
     # Transform sensors.chr columns from character to numeric values
-    records.df <- records.df %>% mutate_at(vars(one_of(sensors.chr)), funs(as.numeric))
+    data.df <- data.df %>% mutate_at(vars(one_of(sensors.chr)), funs(as.numeric))
     
     # Transform mtime column to posix format for easier time handling
-    records.df <- records.df %>% mutate_at("mtime", as.POSIXct, format = "%Y-%m-%dT%H:%M:%SZ")
+    data.df <- data.df %>% mutate_at("mtime", as.POSIXct, format = "%Y-%m-%dT%H:%M:%SZ")
     
     # Transform meta altitude, longitude, latitude columns from character to numeric
-    records.df <- records.df %>% mutate_at(vars(c("altitude", "longitude", "latitude")), funs(as.numeric))
-  }
+    data.df <- data.df %>% mutate_at(vars(c("altitude", "longitude", "latitude")), funs(as.numeric))
+  }  
   
-  # Return the preperly typed and structured records dataframe.
-  return(records.df)
+  # Return the properly typed and structured records dataframe.
+
+  return(data.df)
 }
 
 

@@ -190,6 +190,12 @@ get_from_agromet_API.fun &lt;- function(user_token.chr, table_name.chr, sensors.
   # Create a dataframe for the stations meta-information
   stations_meta.df &lt;- results.l$references$stations
   
+  # The query with table = station does not provide records but only metadata stored in records.df
+  if(table_name.chr == &quot;station&quot;){
+    stations_meta.df &lt;- results.df
+    results.df &lt;- NULL
+  }
+  
   # Group in a list
   results_and_stations_meta.l &lt;- list(stations_meta.df = stations_meta.df, records.df = results.df)
 

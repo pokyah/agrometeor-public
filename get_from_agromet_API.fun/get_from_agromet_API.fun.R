@@ -86,6 +86,12 @@ get_from_agromet_API.fun <- function(user_token.chr, table_name.chr, sensors.chr
   # Create a dataframe for the stations meta-information
   stations_meta.df <- results.l$references$stations
   
+  # The query with table = station does not provide records but only metadata stored in records.df
+  if(table_name.chr == "station"){
+    stations_meta.df <- results.df
+    results.df <- NULL
+  }
+  
   # Group in a list
   results_and_stations_meta.l <- list(stations_meta.df = stations_meta.df, records.df = results.df)
 
