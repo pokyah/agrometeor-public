@@ -65,6 +65,7 @@ get_from_agromet_API.fun <- function(user_token.chr, table_name.chr, sensors.chr
   
   # Build the proper table API call URL
   api_table_url.chr <- paste("https://app.pameseb.be/agromet/api/v1", table_name.chr, sensors.chr, stations_ids.chr, dfrom.chr, dto.chr, sep="/")
+  cat(paste("your API URL call is : ", api_table_url.chr, " \n "))
   
   # Add your user token into the HTTP authentication header and call API (https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization)
   api_table_req.resp <- httr::GET(api_table_url.chr, httr::add_headers("Authorization" = paste("Token", user_token.chr, sep=" ")))
@@ -83,8 +84,14 @@ get_from_agromet_API.fun <- function(user_token.chr, table_name.chr, sensors.chr
   # Remove the terms of service and version info to only keep the data
   results.df <- results.l$results
   
-  # Rename the column "station" to "id" for later clarity of the code
+  # check if we do not have results for this query, stop the execution
+  if(class(results.df) != "data.frame"){
+    stop(paste0("There are no records for this query. Function execution halted. \n Please provide another date Range and/or parameters input" ))
+  }
+  
+  # Rename the column "station" to "id" for later clarity of the code only if the API returns results
   colnames(results.df)[which(names(results.df) == "station")] <- "id"
+
   
   # Create a dataframe for the stations meta-information
   stations_meta.df <- results.l$references$stations

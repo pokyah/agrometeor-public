@@ -66,6 +66,9 @@ prepare_agromet_API_data.fun  <- function(meta_and_records.l){
     # Join stations_meta and records by "id"
     data.df <- left_join(data.df, records.df, by=c("id"))
     
+    # Transform SId and id columns from integer to character
+    data.df <- data.df %>% mutate_at(c("id", "sid"), funs(as.character))
+    
     # Transform sensors.chr columns from character to numeric values
     data.df <- data.df %>% mutate_at(vars(one_of(sensors.chr)), funs(as.numeric))
     
