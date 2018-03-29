@@ -120,7 +120,7 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">R script to retrieve Agromet API data</h1>
 <h4 class="author"><em>Thomas Goossens (CRA-W) - <a href="mailto:t.goossens@cra.wallonie.be">t.goossens@cra.wallonie.be</a></em></h4>
-<h4 class="date"><em> 26-03-2018<br /></em></h4>
+<h4 class="date"><em> 29-03-2018<br /></em></h4>
 
 </div>
 
@@ -169,6 +169,7 @@ get_from_agromet_API.fun &lt;- function(user_token.chr, table_name.chr, sensors.
   
   # Build the proper table API call URL
   api_table_url.chr &lt;- paste(&quot;https://app.pameseb.be/agromet/api/v1&quot;, table_name.chr, sensors.chr, stations_ids.chr, dfrom.chr, dto.chr, sep=&quot;/&quot;)
+  cat(paste(&quot;your API URL call is : &quot;, api_table_url.chr, &quot; \n &quot;))
   
   # Add your user token into the HTTP authentication header and call API (https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization)
   api_table_req.resp &lt;- httr::GET(api_table_url.chr, httr::add_headers(&quot;Authorization&quot; = paste(&quot;Token&quot;, user_token.chr, sep=&quot; &quot;)))
@@ -187,8 +188,14 @@ get_from_agromet_API.fun &lt;- function(user_token.chr, table_name.chr, sensors.
   # Remove the terms of service and version info to only keep the data
   results.df &lt;- results.l$results
   
-  # Rename the column &quot;station&quot; to &quot;id&quot; for later clarity of the code
+  # check if we do not have results for this query, stop the execution
+  if(class(results.df) != &quot;data.frame&quot;){
+    stop(paste0(&quot;There are no records for this query. Function execution halted. \n Please provide another date Range and/or parameters input&quot; ))
+  }
+  
+  # Rename the column &quot;station&quot; to &quot;id&quot; for later clarity of the code only if the API returns results
   colnames(results.df)[which(names(results.df) == &quot;station&quot;)] &lt;- &quot;id&quot;
+
   
   # Create a dataframe for the stations meta-information
   stations_meta.df &lt;- results.l$references$stations
