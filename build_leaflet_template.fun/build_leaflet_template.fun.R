@@ -22,7 +22,7 @@
 #' ## Function arguments definition
 #' 
 #' * `records.sf`
-#' A spatial dataframe in the [sf package](https://cran.r-project.org/web/packages/sf/index.html) format  
+#' a spatial dataframe in the [sf package](https://cran.r-project.org/web/packages/sf/index.html) format  
 #+ setup,echo=TRUE,warning=FALSE,message=FALSE,error=FALSE
 
 #+ ---------------------------------
