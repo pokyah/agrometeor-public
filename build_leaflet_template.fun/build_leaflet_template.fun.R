@@ -33,6 +33,7 @@ build_leaflet_template.fun <- function(records.sf){
   
   # load the leaflet library
   library(leaflet)
+  library(sf)
   
   responsiveness.chr = "\'<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\'"
   
