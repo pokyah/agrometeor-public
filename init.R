@@ -8,14 +8,14 @@
 #'    toc_float:
 #'      collapsed: false
 #'      smooth_scroll: true
+#'  md_document: default
 #'title: "Collection of R Scripts of the Agromet project"
 #'date: \ 20-04-2018\
 #'---
 
 #+ ---------------------------------
-#' ## Script preparation
 #' 
-#+ preparation, echo=TRUE, warning=FALSE, message=FALSE, error=FALSE, results='asis'
+#+ preparation, echo=FALSE, warning=FALSE, message=FALSE, error=FALSE, results='hide'
 
 # Avoid interference with old variables by cleaning the Global Environment
 rm(list=ls(all=TRUE))
@@ -25,12 +25,53 @@ if (!require("here")) install.packages("here")
 library(here)
 wd.chr <- here::here()
 
-# list all the documentation files in the wd
-files <- list.files("./R", full.names = FALSE, pattern="*.html", recursive = TRUE)
-html <- sapply(strsplit(x = files,split = "/"), "[[", 2)
-names <- sapply(strsplit(x = files,split = "/"), "[[", 1)
-cat(paste0("* [",names, "]","(./R/",names,"/",html,") \n  "))
+#+ ---------------------------------
+#' ## Project presentation  
+#' 
+#' Welcome to the __agrometeor-public__ repository, the publicly available R scripts repository related to the [Agromet project](http://www.cra.wallonie.be/fr/agromet).
+#' The present work is under major development phase. If you find a bug or want to suggest an idea, please open an issue.  
+#' Want to contribute ? Feel free to create a pull request.  
+#+ presentation, echo=TRUE, warning=FALSE, message=FALSE, error=FALSE, results='asis'
 
+#+ ---------------------------------
+#' ## Available functions 
+#' 
+#+ tree, echo=FALSE, warning=FALSE, message=FALSE, error=FALSE, results='asis'
+
+# list all the .R Files in the project (these must be knitr ready - YAML header + #' comments) and render to html
+r_files <- list.files("./R", full.names = FALSE, pattern="*.R", recursive = TRUE)
+#lapply(seq_along(r_files), function(x) rmarkdown::render(paste0("./R/",r_files[[x]])))
+
+# list all the documentation files in the project and print those as md links
+html_files <- list.files("./R", full.names = FALSE, pattern="*.html", recursive = TRUE)
+url <- sapply(strsplit(x = html_files,split = "/"), "[[", 2)
+names <- sapply(strsplit(x = html_files,split = "/"), "[[", 1)
+cat(paste0("* [",names, "]","(./R/",names,"/",url,") \n  "))
+
+#+ ---------------------------------
+#' ## How to use the scripts ? 
+#' 3 ways :
+#' 1. __Download using this page__ and add to your R project folder (if you want to stay up-to-date, you will have to manually download the latest version of the scripts)
+#' 2. __From within R, source the up-to-date version from this github repository__. To do so, you will need the little snippet presented here below :
+#'To get the github_url of the script, right click on the download link and select "copy link address"
+#' 3. __If your are familiar with git__, fork this repository and source it in your R script. Doing so, allows you to eventually suggest pull request for code improvement.
+#+ usage, echo=TRUE, warning=FALSE, message=FALSE, error=FALSE, results='asis'
+
+source_github <- function(github_url.chr) {
+  # load required package
+  library(RCurl)
+
+  # read script lines from github and evaluate
+  script <- getURL(github_url.chr, ssl.verifypeer = FALSE)
+  eval(parse(text = script),envir=.GlobalEnv)
+}
+
+
+#+ ---------------------------------
+#' *The agrometeor-public repository website is powered by github pages.*  
+#' *Want to know how to quickly and easily publish your R work ? Check the [tutorial](https://pokyah.github.io/howto/Quickly-publish-your-R-interactive-data-visualization-tools-with-github-pages/) available on my blog.*  
+#'
+#+ gh-pages, echo=TRUE, warning=FALSE, message=FALSE, error=FALSE, results='asis'
 
 #+ ---------------------------------
 #' ## Terms of service 
