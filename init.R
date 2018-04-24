@@ -8,10 +8,23 @@
 #'    toc_float:
 #'      collapsed: false
 #'      smooth_scroll: true
-#'  md_document: default
+#'  revealjs::revealjs_presentation:
+#'    theme: white
+#'    highlight: pygments
+#'    center: true
+#'    incremental: true
+#'    transition: fade
+#'    self_contained: false
+#'    reveal_plugins: ["notes", "search"]
+#'  md_document:
+#'    variant: markdown_github
+#'    toc: false
+#'    toc_depth: 6
+#'  pdf_document: default  
 #'title: "Collection of R Scripts of the Agromet project"
-#'date: \ 20-04-2018\
+#'date: "24 April, 2018"
 #'---
+
 
 #+ ---------------------------------
 #' 
@@ -24,6 +37,7 @@ rm(list=ls(all=TRUE))
 if (!require("here")) install.packages("here")
 library(here)
 wd.chr <- here::here()
+
 
 #+ ---------------------------------
 #' ## Project presentation  
@@ -40,7 +54,8 @@ wd.chr <- here::here()
 
 # list all the .R Files in the project (these must be knitr ready - YAML header + #' comments) and render to html
 r_files <- list.files("./R", full.names = FALSE, pattern="*.R", recursive = TRUE)
-#lapply(seq_along(r_files), function(x) rmarkdown::render(paste0("./R/",r_files[[x]])))
+lapply(seq_along(r_files), function(x) rmarkdown::render(paste0("./R/",r_files[[x]])))
+
 
 # list all the documentation files in the project and print those as md links
 html_files <- list.files("./R", full.names = FALSE, pattern="*.html", recursive = TRUE)
@@ -48,24 +63,24 @@ url <- sapply(strsplit(x = html_files,split = "/"), "[[", 2)
 names <- sapply(strsplit(x = html_files,split = "/"), "[[", 1)
 cat(paste0("* [",names, "]","(./R/",names,"/",url,") \n  "))
 
+
 #+ ---------------------------------
 #' ## How to use the scripts ? 
-#' 3 ways :
-#' 1. __Download using this page__ and add to your R project folder (if you want to stay up-to-date, you will have to manually download the latest version of the scripts)
-#' 2. __From within R, source the up-to-date version from this github repository__. To do so, you will need the little snippet presented here below :
-#'To get the github_url of the script, right click on the download link and select "copy link address"
+#' 3 ways :  
+#' 1. __Download using this page__ and add to your R project folder (if you want to stay up-to-date, you will have to manually download the latest version of the scripts)  
+#' 2. __From within R, source the up-to-date version from this github repository__. To do so, you will need the little snippet presented here below :  
+#'To get the github_url of the script, right click on the download link and select "copy link address"  
 #' 3. __If your are familiar with git__, fork this repository and source it in your R script. Doing so, allows you to eventually suggest pull request for code improvement.
 #+ usage, echo=TRUE, warning=FALSE, message=FALSE, error=FALSE, results='asis'
 
-source_github <- function(github_url.chr) {
-  # load required package
-  library(RCurl)
-
-  # read script lines from github and evaluate
-  script <- getURL(github_url.chr, ssl.verifypeer = FALSE)
-  eval(parse(text = script),envir=.GlobalEnv)
-}
-
+# source_github <- function(github_url.chr) {
+#   # load required package
+#   library(RCurl)
+# 
+#   # read script lines from github and evaluate
+#   script <- getURL(github_url.chr, ssl.verifypeer = FALSE)
+#   eval(parse(text = script),envir=.GlobalEnv)
+# }
 
 #+ ---------------------------------
 #' *The agrometeor-public repository website is powered by github pages.*  
