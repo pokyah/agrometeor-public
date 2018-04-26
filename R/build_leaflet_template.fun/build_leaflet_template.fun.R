@@ -46,10 +46,10 @@ build_leaflet_template.fun <- function(records.sf){
                      providers$Esri.WorldImagery,
                      options = providerTileOptions(opacity = 1)
     ) %>% 
-    fitBounds(st_bbox(extent.sf)[[1]], 
-              st_bbox(extent.sf)[[2]], 
-              st_bbox(extent.sf)[[3]], 
-              st_bbox(extent.sf)[[4]]
+    fitBounds(st_bbox(records.sf)[[1]], 
+              st_bbox(records.sf)[[2]], 
+              st_bbox(records.sf)[[3]], 
+              st_bbox(records.sf)[[4]]
     ) %>%
     addLayersControl(baseGroups = c("Stamen", "Satellite"),
                      overlayGroups = c("KNMI rain radar", "stations", "MNT", "slope", "aspect"),
