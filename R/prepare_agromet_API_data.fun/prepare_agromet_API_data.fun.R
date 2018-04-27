@@ -24,7 +24,7 @@
 #+ function,echo=TRUE,warning=FALSE,message=FALSE,error=FALSE, results='asis'
 
 # Declaration of the function
-prepare_agromet_API_data.fun  <- function(meta_and_records.l){
+prepare_agromet_API_data.fun  <- function(meta_and_records.l, table_name.chr=NULL){
   
   # load dplyr library 
   library(dplyr)

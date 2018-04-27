@@ -51,7 +51,7 @@
 #+ function,echo=TRUE,warning=FALSE,message=FALSE,error=FALSE, results='asis'
 
 # Declaration of the function to get pameseb data from the Pameseb API 
-get_from_agromet_API.fun <- function(user_token.chr, table_name.chr, sensors.chr=NULL, stations_ids.chr, dfrom.chr=NULL, dto.chr=NULL){
+get_from_agromet_API.fun <- function(user_token.chr, table_name.chr, sensors.chr=NULL, stations_ids.chr, dfrom.chr=NULL, dto.chr=NULL, month_day.chr=NULL){
   
   # Load required libraries 
   library("jsonlite")
@@ -62,9 +62,19 @@ get_from_agromet_API.fun <- function(user_token.chr, table_name.chr, sensors.chr
     sensors.chr <- gsub(" ","",sensors.chr)
   }
 
-  
   # Build the proper table API call URL
-  api_table_url.chr <- paste("https://app.pameseb.be/agromet/api/v1", table_name.chr, sensors.chr, stations_ids.chr, dfrom.chr, dto.chr, sep="/")
+  if(table_name.chr=="get_rawdata_irm"){
+    api_table_url.chr <- paste("https://app.pameseb.be/agromet/api/v1", table_name.chr, sensors.chr, stations_ids.chr, dfrom.chr, dto.chr, sep="/")
+  }
+  if(table_name.chr=="station"){
+    api_table_url.chr <- paste("https://app.pameseb.be/agromet/api/v1", table_name.chr, sensors.chr, stations_ids.chr, dfrom.chr, dto.chr, sep="/")
+  }
+  if(table_name.chr=="cleandata"){
+    api_table_url.chr <- paste("https://app.pameseb.be/agromet/api/v1", table_name.chr, sensors.chr, stations_ids.chr, dfrom.chr, dto.chr, sep="/")
+  }
+  if(table_name.chr=="get_tmy"){
+    api_table_url.chr <- paste("https://app.pameseb.be/agromet/api/v1", table_name.chr, sensors.chr, stations_ids.chr, month_day.chr, sep="/")
+  }
   cat(paste("your API URL call is : ", api_table_url.chr, " \n "))
   
   # Add your user token into the HTTP authentication header and call API (https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization)

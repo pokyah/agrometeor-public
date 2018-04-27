@@ -123,18 +123,25 @@
       records.df
     }
     if(filter.chr == "day_only"){
-      records.df <- is_it_day(records.df) %>% dplyr::filter(day==TRUE)
+      records.df <- h.is_it_day(records.df) %>% dplyr::filter(day==TRUE)
     }
     if(filter.chr == "night_only"){
-      records.df <- is_it_day(records.df) %>% dplyr::filter(day==FALSE)
+      records.df <- h.is_it_day(records.df) %>% dplyr::filter(day==FALSE)
     }
     if(filter.chr == "high_rad_low_wind"){
       vvt.mean.df <- records.df %>%
         summarise_(.dots = paste0('mean(', "vvt",', na.rm = TRUE)'))
-      day.records.df <- filter(is_it_day(records.df), day==TRUE)
+      day.records.df <- filter(h.is_it_day(records.df), day==TRUE)
       ens.day.mean.df <- day.records.df %>%
         summarise_(.dots = paste0('mean(', "ens",', na.rm = TRUE)'))
       retained.df <- records.df %>% dplyr::filter(vvt < vvt.mean.df[1,]) %>% dplyr::filter(ens >= ens.day.mean.df[1,])
+      records.df <- records.df %>%
+        filter(mtime %in% retained.df$mtime)
+    }
+    if(filter.chr == "low_rad_high_wind"){
+      vvt.mean.df <- records.df %>%
+        summarise_(.dots = paste0('mean(', "vvt",', na.rm = TRUE)'))
+      retained.df <- records.df %>% dplyr::filter(vvt >= vvt.mean.df[1,]) %>% dplyr::filter(ens < 10)
       records.df <- records.df %>%
         filter(mtime %in% retained.df$mtime)
     }
@@ -227,7 +234,7 @@
       geom_hline(yintercept= ba_stats.df$CI.lines[6], linetype="dashed", color = "blue", size=0.5) + 
       geom_hline(yintercept= ba_stats.df$CI.lines[3], linetype="dashed", color = "red", size=0.5) + 
       geom_hline(yintercept= ba_stats.df$CI.lines[4], linetype="dashed", color = "red", size=0.5) +
-      scale_color_manual(values= ggplotColours(n=12))
+      scale_color_manual(values= h.ggplot_colours(n=12))
     
     if(output.chr=="plot"){
       return(blandAltman_plot.l)
