@@ -190,6 +190,7 @@
     #### clearness index
     if(filter.chr == "q70_ci"){
       ci.q70.df <- records.df %>%
+        dplyr::filter(ci > 0) %>%
         summarise_(.dots = paste0('quantile(', "ci",', probs= .70, na.rm = TRUE)'))
       retained.df <- records.df %>% dplyr::filter(ci >= ci.q70.df[1,])
       records.df <- records.df %>%
@@ -294,6 +295,9 @@
       ba_stats.l[-1,c(1,2,3,4,7,8)] <- NA
       return(ba_stats.l)
     }
+    if(output.chr=="data"){
+      return(ba_data.df)
+    }
   }
   
 #+ ---------------------------------
@@ -366,7 +370,7 @@
   h.rad_top_atm <- function(records.df){
     
     compute_rad_top_atm=function(datetime.dt, lat.num, lon.num){
-      
+
       RAD2DEG=180./pi
       DEG2RAD=pi/180.
       
@@ -717,11 +721,13 @@
       }
       
       #  DEFINE DAY AND LOCATION 
-      DAYCODE = strftime(datetime.dt, format="%Y%m%d")
+      DAYCODE = strftime( records.df$mtime[17], format="%Y%m%d") 
+        #gsub('-', '', as.character(datetime.dt))
+        #strftime(datetime.dt, format="%Y%m%d%h%m%s")
       lat=lat.num
       lon=lon.num
       
-      year= lubridate::year(datetime.dt) # floor(as.numeric(DAYCODE)/10000)
+      year= floor(as.numeric(DAYCODE)/10000) #lubridate::year(datetime.dt) 
       lambda=lon*DEG2RAD
       phi=lat*DEG2RAD
       
@@ -739,11 +745,9 @@
       hour_ss=omega_to_LAT(omega_ss)
       hour_sr=hour_sr-time_diff
       hour_ss=hour_ss-time_diff  
-      print(hour_sr)
-      print(hour_ss)
-      
+ 
       #  SOLAR ELEVATION, ZENITHAL ANGLE and AZIMUTHAL ANGLE  (in radian)  
-      hour=12.5;  #decimal hour in UTC
+      hour= as.numeric(strftime(datetime.dt, format="%H")) # 12.5;  #decimal hour in UTC
       omega = solar_hour_angle(hour+time_diff)
       res = elevation_zenith_sun(phi, delta, omega)
       gamma=res[1] 
@@ -751,16 +755,14 @@
       alpha = azimuth_sun(phi, delta, omega, gamma)
       
       #  TOP-OF-ATMOSPHERE HORIZONTAL SOLAR RADIATION BETWEEN 2 TIMESTAMPS (in Wh/m²)  
-      hour1=12.5  #decimal hour in UTC
-      hour2=14.5  #decimal hour in UTC
+      hour1= as.numeric(strftime(datetime.dt, format="%H")) #12.5  #decimal hour in UTC
+      hour2= as.numeric(strftime(datetime.dt, format="%H"))+1 # 14.5  #decimal hour in UTC
       omega1 = solar_hour_angle(hour1+time_diff)
       omega2 = solar_hour_angle(hour2+time_diff)      
       eccentricity=corr_distance(day_angle)
       E = G0_general(phi, eccentricity, delta, omega1, omega2)      
-      print(E)
       return(E)
     }
-    
     
     # add a column rad_top_atm
     records.df <- records.df %>%
@@ -769,7 +771,9 @@
     
     # add a column with the clearness index
     records.df <- records.df %>%
-      mutate(ci=ens/rad_top_atm)
+      mutate(ci=ens/rad_top_atm) %>%
+      mutate_at(.vars = vars(ci), .funs = funs(ifelse(is.na(.), 0, .))) %>% #replacing NA by 0
+      mutate_at(.vars = vars(ci), .funs = funs(ifelse(.>1, 1, .))) #replacing values larger than 1 by 1
     
     # return the dataframe containing the rad_top_atm and ci columns 
     return(records.df)
