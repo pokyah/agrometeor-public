@@ -130,6 +130,7 @@
     }
     if(filter.chr == "night_only"){
       records.df <- h.is_it_day(records.df) %>% dplyr::filter(day==FALSE)
+      h.check_NA(records.df)
     }
     if(filter.chr == "high_rad_low_wind"){
       vvt.q75.df <- records.df %>%
@@ -148,9 +149,9 @@
         filter(mtime %in% retained.df$mtime)
     }
     if(filter.chr == "low_rad_high_wind"){
-      vvt.q75.df <- records.df %>%
-        summarise_(.dots = paste0('quantile(', "vvt",', probs= .75, na.rm = TRUE)'))
-      retained.df <- records.df %>% dplyr::filter(vvt >= vvt.q75.df[1,]) %>% dplyr::filter(ens == 0)
+      vvt.q50.df <- records.df %>%
+        summarise_(.dots = paste0('quantile(', "vvt",', probs= .50, na.rm = TRUE)'))
+      retained.df <- records.df %>% dplyr::filter(ens == 0) %>% dplyr::filter(vvt >= vvt.q50.df[1,])
       records.df <- records.df %>%
         filter(mtime %in% retained.df$mtime)
     }
@@ -205,6 +206,7 @@
 
   h.make_wide <- function(input_records.df, sensor_name.chr){
     input_records_wide.df <- input_records.df[c("mtime", "sid", sensor_name.chr)] %>% spread_("sid", sensor_name.chr)
+    return(na.omit(input_records_wide.df))
   }
 
 #+ ---------------------------------
