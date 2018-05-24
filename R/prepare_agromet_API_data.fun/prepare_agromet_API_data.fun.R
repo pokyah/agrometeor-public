@@ -1,4 +1,4 @@
-#'---
+ #'---
 #'author: "Thomas Goossens (CRA-W) - t.goossens@cra.wallonie.be"
 #'output:
 #'  html_document:
@@ -64,10 +64,10 @@ prepare_agromet_API_data.fun  <- function(meta_and_records.l, table_name.chr=NUL
     
   if(!is.null(records.df)){
     # Join stations_meta and records by "id"
-    data.df <- left_join(data.df, records.df, by=c("id"))
+    data.df <- left_join(data.df, records.df, by=c("sid"))
     
-    # Transform SId and id columns from integer to character
-    data.df <- data.df %>% mutate_at(c("id", "sid"), funs(as.character))
+    # Transform sid and id columns from integer to character
+    data.df <- data.df %>% mutate_at(c("sid"), funs(as.character))
     
     # Transform sensors.chr columns from character to numeric values
     data.df <- data.df %>% mutate_at(vars(one_of(sensors.chr)), funs(as.numeric))

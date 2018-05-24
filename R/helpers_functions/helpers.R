@@ -197,6 +197,71 @@
       records.df <- records.df %>%
         filter(mtime %in% retained.df$mtime)
     }
+    #### daily_max +/- 2h
+    if(filter.chr == "daily_max_only"){
+      pameseb61.df <- records.df %>%
+        dplyr::filter(sid==61)
+      pameseb61.df$key <- as.numeric(row.names(pameseb61.df))
+      irm1000.df <- records.df %>%
+        dplyr::filter(sid==1000)
+      irm1000.df$key <- as.numeric(row.names(irm1000.df))
+      
+      daily_max_inds.df <- pameseb61.df %>%
+        dplyr::filter(tsa == daily_max) %>%
+        dplyr::select(key)
+      daily_max_mp2_inds.df <- dplyr::bind_rows(
+        daily_max_inds.df +1,
+        daily_max_inds.df -1,
+        daily_max_inds.df +2,
+        daily_max_inds.df -2,
+        daily_max_inds.df +3,
+        daily_max_inds.df -3,
+        daily_max_inds.df) %>%
+        mutate(key=sort(key))
+      
+      daily_max_mp2_pameseb61.df <- pameseb61.df[daily_max_mp2_inds.df[,1],] 
+      daily_max_mp2_irm1000.df <- irm1000.df[daily_max_mp2_inds.df[,1],] 
+      
+      records.df <- data.frame(bind_rows(
+        dplyr::select(daily_max_mp2_pameseb61.df, -key),
+        dplyr::select(daily_max_mp2_irm1000.df, -key)
+      ))
+      
+      # hack to avoid duplicate rows
+      records.df <- unique(records.df)
+    }
+    #### daily_max +/- 2h
+    if(filter.chr == "non_daily_max_only"){
+      pameseb61.df <- records.df %>%
+        dplyr::filter(sid==61)
+      pameseb61.df$key <- as.numeric(row.names(pameseb61.df))
+      irm1000.df <- records.df %>%
+        dplyr::filter(sid==1000)
+      irm1000.df$key <- as.numeric(row.names(irm1000.df))
+      
+      daily_max_inds.df <- pameseb61.df %>%
+        dplyr::filter(tsa == daily_max) %>%
+        dplyr::select(key)
+      daily_max_mp2_inds.df <- dplyr::bind_rows(
+        daily_max_inds.df +1,
+        daily_max_inds.df -1,
+        daily_max_inds.df +2,
+        daily_max_inds.df -2,
+        daily_max_inds.df +3,
+        daily_max_inds.df -3,
+        daily_max_inds.df) %>%
+        mutate(key=sort(key))
+      
+      daily_max_mp2_pameseb61.df <- pameseb61.df[-(daily_max_mp2_inds.df[,1]),] 
+      daily_max_mp2_irm1000.df <- irm1000.df[-(daily_max_mp2_inds.df[,1]),] 
+      
+      records.df <- data.frame(bind_rows(
+        daily_max_mp2_pameseb61.df,
+        daily_max_mp2_irm1000.df
+      ))
+      # hack to avoid duplicate rows
+      records.df <- unique(records.df)
+    }
     return(records.df)
   }
 
@@ -205,7 +270,8 @@
 #+ make_wide, echo=TRUE, warning=FALSE, message=FALSE, error=FALSE, results='asis'
 
   h.make_wide <- function(input_records.df, sensor_name.chr){
-    input_records_wide.df <- input_records.df[c("mtime", "sid", sensor_name.chr)] %>% spread_("sid", sensor_name.chr)
+    input_records_wide.df <- input_records.df[c("mtime", "sid", sensor_name.chr)] %>% 
+      spread_("sid", sensor_name.chr)
     return(na.omit(input_records_wide.df))
   }
 

@@ -51,11 +51,27 @@
 #+ function,echo=TRUE,warning=FALSE,message=FALSE,error=FALSE, results='asis'
 
 # Declaration of the function to get pameseb data from the Pameseb API 
-get_from_agromet_API.fun <- function(user_token.chr, table_name.chr, sensors.chr=NULL, stations_ids.chr, dfrom.chr=NULL, dto.chr=NULL, month_day.chr=NULL){
+get_from_agromet_API.fun <- function(
+  user_token.chr,
+  table_name.chr,
+  sensors.chr=NULL,
+  stations_ids.chr,
+  dfrom.chr=NULL,
+  dto.chr=NULL,
+  month_day.chr=NULL,
+  api_v.chr="v1",
+  test.bool=FALSE
+  ){
   
   # Load required libraries 
   library("jsonlite")
   library("httr")
+  
+  # Defining the base URL for API calls
+  baseURL.chr <- "https://app.pameseb.be/agromet/api/"
+  if(test.bool == TRUE){
+    baseURL.chr <- "https://testapp.pameseb.be/agromet/api/"
+  }
   
   # Clean the eventual spaces in the sensors.chr string
   if(!is.null(sensors.chr)){
@@ -64,16 +80,16 @@ get_from_agromet_API.fun <- function(user_token.chr, table_name.chr, sensors.chr
 
   # Build the proper table API call URL
   if(table_name.chr=="get_rawdata_irm"){
-    api_table_url.chr <- paste("https://app.pameseb.be/agromet/api/v1", table_name.chr, sensors.chr, stations_ids.chr, dfrom.chr, dto.chr, sep="/")
+    api_table_url.chr <- paste(baseURL.chr, api_v.chr, table_name.chr, sensors.chr, stations_ids.chr, dfrom.chr, dto.chr, sep="/")
   }
   if(table_name.chr=="station"){
-    api_table_url.chr <- paste("https://app.pameseb.be/agromet/api/v1", table_name.chr, sensors.chr, stations_ids.chr, dfrom.chr, dto.chr, sep="/")
+    api_table_url.chr <- paste(baseURL.chr, api_v.chr, table_name.chr, sensors.chr, stations_ids.chr, dfrom.chr, dto.chr, sep="/")
   }
   if(table_name.chr=="cleandata"){
-    api_table_url.chr <- paste("https://app.pameseb.be/agromet/api/v1", table_name.chr, sensors.chr, stations_ids.chr, dfrom.chr, dto.chr, sep="/")
+    api_table_url.chr <- paste(baseURL.chr, api_v.chr, table_name.chr, sensors.chr, stations_ids.chr, dfrom.chr, dto.chr, sep="/")
   }
   if(table_name.chr=="get_tmy"){
-    api_table_url.chr <- paste("https://app.pameseb.be/agromet/api/v1", table_name.chr, sensors.chr, stations_ids.chr, month_day.chr, sep="/")
+    api_table_url.chr <- paste(baseURL.chr, api_v.chr, table_name.chr, sensors.chr, stations_ids.chr, month_day.chr, sep="/")
   }
   cat(paste("your API URL call is : ", api_table_url.chr, " \n "))
   
