@@ -83,7 +83,7 @@ get_from_agromet_API.fun <- function(
     api_table_url.chr <- paste(baseURL.chr, api_v.chr, table_name.chr, sensors.chr, stations_ids.chr, dfrom.chr, dto.chr, sep="/")
   }
   if(table_name.chr=="station"){
-    api_table_url.chr <- paste(baseURL.chr, api_v.chr, table_name.chr, sensors.chr, stations_ids.chr, dfrom.chr, dto.chr, sep="/")
+    api_table_url.chr <- paste(baseURL.chr, api_v.chr, table_name.chr, stations_ids.chr,  sep="/")
   }
   if(table_name.chr=="cleandata"){
     api_table_url.chr <- paste(baseURL.chr, api_v.chr, table_name.chr, sensors.chr, stations_ids.chr, dfrom.chr, dto.chr, sep="/")
