@@ -52,14 +52,14 @@
 
 # Declaration of the function to get pameseb data from the Pameseb API 
 get_from_agromet_API.fun <- function(
-  user_token.chr,
-  table_name.chr,
+  user_token.chr=NULL,
+  table_name.chr=NULL,
   sensors.chr=NULL,
   stations_ids.chr,
   dfrom.chr=NULL,
   dto.chr=NULL,
   month_day.chr=NULL,
-  api_v.chr="v1",
+  api_v.chr=NULL,
   test.bool=FALSE
   ){
   
@@ -68,9 +68,9 @@ get_from_agromet_API.fun <- function(
   library("httr")
   
   # Defining the base URL for API calls
-  baseURL.chr <- "https://app.pameseb.be/agromet/api/"
+  baseURL.chr <- "https://app.pameseb.be/agromet/api"
   if(test.bool == TRUE){
-    baseURL.chr <- "https://testapp.pameseb.be/agromet/api/"
+    baseURL.chr <- "https://testapp.pameseb.be/agromet/api"
   }
   
   # Clean the eventual spaces in the sensors.chr string
@@ -116,9 +116,8 @@ get_from_agromet_API.fun <- function(
   }
   
   # Rename the column "station" to "id" for later clarity of the code only if the API returns results
-  colnames(results.df)[which(names(results.df) == "station")] <- "id"
+  #colnames(results.df)[which(names(results.df) == "station")] <- "id"
 
-  
   # Create a dataframe for the stations meta-information
   stations_meta.df <- results.l$references$stations
   
